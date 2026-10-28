@@ -1,2 +1,5 @@
-# Computer as a Medium
+# Computer as a Medium### This is a repo for the Computer As A Medium Fall 2026.
 
+### Group Name: [Z Fighters]
+
+### Group Members: [Yarielys Morales Camacho, Isaac Medina]
