@@ -2,42 +2,67 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 public class PlayerMovement : MonoBehaviour
 {
+    private Animator animator;
     public float moveSpeed;
+    public SpriteRenderer spriteRenderer;
     private float speedX = 0f;
     private float speedY = 0f;
     public Rigidbody2D rb;
-    public SpriteRenderer spriteRenderer;
     public Sprite AlienF;
     public Sprite AlienB;
-    public Sprite AlienL;
+
     public Sprite AlienR;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-void Start()
+    void Start()
     {
+        animator = GetComponent<Animator>();
     }
     // Update is called once per frame
     void Update()
     {
+        animator.SetBool("walk", speedX != 0 || speedY != 0);
         Movement();
     }
     void Movement()
     {
+        if (speedX > 0)
+        {
+            spriteRenderer.flipX = false;
+        }
+        else if (speedX < 0)
+        {
+            spriteRenderer.flipX = true;
+        }
         // Horizontal Movement
         if (Keyboard.current.aKey.isPressed)
         {
             speedX = -moveSpeed;
-            spriteRenderer.sprite = AlienL;
+            spriteRenderer.sprite = AlienR;
         }
         else if (Keyboard.current.dKey.isPressed)
         {
             speedX = moveSpeed;
-            spriteRenderer.sprite = AlienR;
         }
         else
         {
             speedX = 0;
         }
         // Vertical Movement
+        if (Keyboard.current.aKey.isPressed)
+        {
+            speedX = -moveSpeed;
+            spriteRenderer.flipX = true;
+            spriteRenderer.sprite = AlienR;
+        }
+        else if (Keyboard.current.dKey.isPressed)
+        {
+            speedX = moveSpeed;
+            spriteRenderer.flipX = false;
+            
+        }
+        else
+        {
+            speedX = 0;
+        }
         if (Keyboard.current.wKey.isPressed)
         {
             speedY = moveSpeed;
@@ -52,7 +77,6 @@ void Start()
         {
             speedY = 0;
         }
-
         rb.linearVelocity = new Vector2(speedX, speedY);
     }
 }
